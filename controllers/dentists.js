@@ -1,5 +1,5 @@
 const Dentist = require('../models/Dentist');
-const Appointment = require('../models/Appointment');
+const Appointment = require('../models/Booking');
 
 // @desc    Get all dentists
 // @route   GET /api/v1/dentists
@@ -15,7 +15,7 @@ exports.getDentists = async (req, res, next) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-  query = Dentist.find(JSON.parse(queryStr)).populate('appointments');
+  query = Dentist.find(JSON.parse(queryStr)).populate('bookings');
 
   // Select fields
   if (req.query.select) {
@@ -60,6 +60,7 @@ exports.getDentists = async (req, res, next) => {
       data: dentists
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ success: false });
   }
 };

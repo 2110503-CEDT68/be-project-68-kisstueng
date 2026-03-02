@@ -39,8 +39,8 @@ const DentistSchema = new mongoose.Schema({
 });
 
 // Virtual populate: Dentist → Appointments
-DentistSchema.virtual('appointments', {
-  ref: 'Appointment',
+DentistSchema.virtual('bookings', {
+  ref: 'Booking',
   localField: '_id',
   foreignField: 'dentist',
   justOne: false

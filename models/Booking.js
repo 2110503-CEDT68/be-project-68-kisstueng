@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const AppointmentSchema = new mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
   apptDate: {
     type: Date,
-    required: [true, 'Please add an appointment date'],
+    required: [true, 'Please add a booking date'],
     validate: {
       validator: function (value) {
         return value > Date.now();
       },
-      message: 'Appointment date must be in the future'
+      message: 'Booking date must be in the future'
     }
   },
   user: {
@@ -27,10 +27,10 @@ const AppointmentSchema = new mongoose.Schema({
   }
 });
 
-// ป้องกัน user จองซ้ำวันเดียวกันที่โรงพยาบาลเดียวกัน
-AppointmentSchema.index(
+// ป้องกัน user จองซ้ำวันเดียวกันกับ dentist คนเดิม
+BookingSchema.index(
   { user: 1, dentist: 1, apptDate: 1 },
   { unique: true }
 );
 
-module.exports = mongoose.model('Appointment', AppointmentSchema);
+module.exports = mongoose.model('Booking', BookingSchema);
