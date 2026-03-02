@@ -57,6 +57,9 @@ const limiter=rateLimit({
 });
 app.use(limiter);
 
+
+app.use(express.static('public'));
+
 app.use('/api/v1/dentists', dentists);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/appointments',appointments);

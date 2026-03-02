@@ -7,7 +7,7 @@ const {
   updateAppointment,
   deleteAppointment
 } = require('../controllers/appointments');
-
+1
 const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });

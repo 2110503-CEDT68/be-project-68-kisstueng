@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f4f4f9;
+}
+
+h1 {
+  text-align: center;
+}
+
+section {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+form input, form select, form button {
+  margin: 5px;
+  padding: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+button.action {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
