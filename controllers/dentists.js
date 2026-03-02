@@ -1,5 +1,5 @@
 const Dentist = require('../models/Dentist');
-const Appointment = require('../models/Appointment');
+const Booking = require('../models/Booking');
 
 // @desc    Get all dentists
 // @route   GET /api/v1/dentists
@@ -15,7 +15,8 @@ exports.getDentists = async (req, res, next) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-  query = Dentist.find(JSON.parse(queryStr)).populate('appointments');
+  
+  query = Dentist.find(JSON.parse(queryStr)).populate('bookings');
 
   // Select fields
   if (req.query.select) {
@@ -64,12 +65,14 @@ exports.getDentists = async (req, res, next) => {
   }
 };
 
+
 // @desc    Get single dentist
 // @route   GET /api/v1/dentists/:id
 // @access  Public
 exports.getDentist = async (req, res, next) => {
   try {
-    const dentist = await Dentist.findById(req.params.id);
+    
+    const dentist = await Dentist.findById(req.params.id).populate('bookings');
 
     if (!dentist) {
       return res.status(404).json({ success: false });
@@ -83,6 +86,7 @@ exports.getDentist = async (req, res, next) => {
     res.status(400).json({ success: false });
   }
 };
+
 
 // @desc    Create dentist
 // @route   POST /api/v1/dentists
@@ -99,6 +103,7 @@ exports.createDentist = async (req, res, next) => {
     next(err);
   }
 };
+
 
 // @desc    Update dentist
 // @route   PUT /api/v1/dentists/:id
@@ -127,6 +132,7 @@ exports.updateDentist = async (req, res, next) => {
   }
 };
 
+
 // @desc    Delete dentist
 // @route   DELETE /api/v1/dentists/:id
 // @access  Private (Admin)
@@ -141,8 +147,8 @@ exports.deleteDentist = async (req, res, next) => {
       });
     }
 
-    // Delete all appointments related to this dentist
-    await Appointment.deleteMany({ dentist: req.params.id });
+   
+    await Booking.deleteMany({ dentist: req.params.id });
 
     await Dentist.deleteOne({ _id: req.params.id });
 
